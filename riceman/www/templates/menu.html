@@ -1,0 +1,27 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <!-- Back button -->
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+      <!-- Logo and app name -->
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-leaf" menu-toggle="left">Riceman</button>
+      </ion-nav-buttons>
+      <!-- Login, Notification -->
+      <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-person" menu-toggle="right" ng-click="openPopover($event)"></button>
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+</ion-side-menus>
+<ion-tabs class="tabs-positive tabs-icon-top">
+  <!-- Dashboard Tab -->
+  <ion-tab title="Home" icon-off="ion-home" icon-on="ion-home" ng-click="tabRedirect('app.dash')">
+  </ion-tab>
+  <!-- Project List -->
+  <ion-tab ng-if="uid" title="Project List" icon-off="ion-ios-list-outline" icon-on="ion-ios-list-outline" ng-click="tabRedirect('app.projects')">
+  </ion-tab>
+</ion-tabs>

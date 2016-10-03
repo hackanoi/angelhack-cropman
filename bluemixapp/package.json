@@ -1,0 +1,22 @@
+{
+  "name": "NodejsStarterApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.0.2",
+    "cfenv": "1.0.x",
+    "cloudant": "^1.4.1",
+    "dotenv": "^2.0.0",
+    "express": "4.13.x",
+    "ibmiotf": "0.2.11",
+    "mqtt": "1.5.0",
+    "watson-developer-cloud": "^1.3.3"
+  },
+  "repository": {},
+  "engines": {
+    "node": "4.2.x"
+  }
+}

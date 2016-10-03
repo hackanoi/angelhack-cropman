@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agtech Graph</title>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.21/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.js"></script>
+    <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="row">
+            <div class="col-md-10">
+
+            <h3>Graph</h3>
+
+            <canvas id="graph" width="1000" height="300"></canvas>
+
+            <div id="legend"></div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <h3>Table</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Pictures</th>
+                            <th>Data</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="sensor in sensors">
+                            <td>{{ timestamps[$index].text }}</td>
+                            <td>
+                                <div v-if="sensor.imageid">
+                                    <image src="http://hackanoi-visual-recognition.mybluemix.net/uploads/{{ sensor.imageid }}" class="img-responsive">
+                                </div>
+                                <div v-else>
+                                    No picture
+                                </div>
+                            </td>
+                            <td>
+                                <dl class="dl-horizontal">
+                                    <dt>Temperature</dt>
+                                    <dd>{{ sensor.temp }}</dd>
+                                    <dt>Humidity</dt>
+                                    <dd>{{ sensor.humidity }}</dd>
+                                    <dt>Soilmoisture</dt>
+                                    <dd>{{ sensor.soilmoisture }}</dd>
+                                </dl>
+                            </td>
+                            <td>
+                                <div v-if="sensor.comments != undefined">
+                                    <ul>
+                                        <li v-for="comment in sensor.comments">
+                                            {{ comment }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div v-else>
+                                    No comment yet
+                                </div>
+                                <button id="show-modal" @click="handlePopup(timestamps[$index].value)" class="btn btn-primary">Add Comment</button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="modal-mask" v-show="show" transition="modal">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <form action="/api/cloudant/" method="POST">
+                        <div class="modal-header">
+                            <slot name="header">
+                                <h3>Comment</h3>
+                            </slot>
+                        </div>
+
+                        <div class="modal-body">
+                            <slot name="body">
+                                <div class="form-group">
+                                    <label for="comment">Your comment</label>
+                                    <textarea name="comment" class="form-control" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="author">Author</label>
+                                    <input type="text" class="form-control" name="author" value="Expert"required>
+                                </div>
+                                <input type="hidden" value="{{ input_time }}" name="timestamp">
+                            </slot>
+                        </div>
+
+                        <div class="modal-footer">
+                            <slot name="footer">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                                <a href="#" class="modal-default-button btn btn-default" @click="show = false">
+                                    Cancel
+                                </a>
+                            </slot>
+                        </div>
+                    </form>
+                </div>
+           </div>
+        </div>
+
+    </div>
+
+    <script>
+    var timestamps = [];
+
+    (function drawChart() {
+        var jsonData = $.ajax({
+            url: '/api/sensors',
+            dataType: 'json',
+        }).done(function (results) {
+            var labels = [];
+
+            var temperature = {
+                label: 'Temperature',
+                data: [],
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "red",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+            };
+
+            var soilmoisture = {
+                label: 'Soilmoisture',
+                data: [],
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "green",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+            };
+
+            var humidity = {
+                label: 'Humidity',
+                data: [],
+                fillColor: "rgba(130,130,300,0.2)",
+                strokeColor: "blue",
+                pointColor: "rgba(130,130,300,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(130,130,300,1)",
+            }
+
+            for (i = 0; i < results.length; i++) {
+                var date = new Date(results[i].timestamp*1000);
+                // Hours part from the timestamp
+                var hours = date.getHours();
+                // Minutes part from the timestamp
+                var minutes = "0" + date.getMinutes();
+                // Seconds part from the timestamp
+                var seconds = "0" + date.getSeconds();
+
+                var human_date = date.getDate() + '/' + date.getMonth() + '-' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+                labels.push(human_date);
+
+                timestamps.push({value: results[i].timestamp, text: human_date});
+
+                humidity.data.push(results[i].humidity);
+                temperature.data.push(results[i].temp);
+                soilmoisture.data.push(results[i].soilmoisture);
+            }
+
+            var data = {
+                labels: labels,
+                datasets: [
+                    temperature,
+                    soilmoisture,
+                    humidity
+                ]
+            };
+
+            var context = document.getElementById('graph').getContext('2d');
+
+            var newChart = new Chart(context).Line(data);
+
+            $('#legend').html(newChart.generateLegend());
+
+            $("#graph").click(function(e) {
+               var activeBars = newChart.getPointsAtEvent(e);
+               console.log(activeBars[0]);
+            });
+        });
+
+    })();
+
+    new Vue({
+        el: '#app',
+
+        data: {
+            timestamps: timestamps,
+            sensors: [],
+            show: false,
+            input_time: 0,
+        },
+
+        ready: function() {
+            this.fetchData();
+        },
+
+        methods:
+        {
+            fetchData: function() {
+                this.$http.get('/api/sensors', function(data, status, request) {
+                    if (status == 200) {
+                        this.sensors = data;
+                    }
+                });
+            },
+
+            handlePopup: function(time) {
+                this.input_time = time;
+                this.show = true;
+            }
+        },
+    });
+
+    </script>
+</body>
+</html>

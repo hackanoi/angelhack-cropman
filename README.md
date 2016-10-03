@@ -1,2 +1,2 @@
-# angelhack-cropman
-Cropman app for Angelhack
+# riceman
+application for rice monitor

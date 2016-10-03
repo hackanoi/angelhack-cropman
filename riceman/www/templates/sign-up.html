@@ -1,0 +1,25 @@
+<ion-view view-title="Sign-Up">
+  <ion-content>
+    <div class="message">
+      <p ng-show="signup.email.$error.required">Email is required!</p>
+      <p ng-show="signup.email.$error.email">Email is not valid!</p>
+      <p ng-show="signup.password.$error.required">Password is required!</p>
+      <p ng-show="signup.confirmPassword.$error.required">Confirm password is required!</p>
+      <p ng-show="signUp.confirmPassword.$error.match">Fields do not match!</p>
+    </div>
+    <form name="signup">
+      <div class="list">
+        <label class="item item-input">
+          <input type="email" placeholder="Email" ng-model="user.email" name="email" required>
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Password" ng-model="user.password" name="password" required>
+        </label>
+        <label class="item item-input">
+          <input ng-model="user.confirmpassword" placeholder="Confirm password" type="password" data-match="user.password" name="confirmPassword" required />
+        </label>
+        <button class="button button-green col" type="submit" ng-click="signUp(user)">Sign up</button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

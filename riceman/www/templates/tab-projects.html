@@ -1,0 +1,15 @@
+<ion-view view-title="Projects" class="ion-view">
+  <ion-content class="ion-content ion-content-projects">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    <div class="project-item" ng-repeat="(key, project) in projects">
+      <a class="item item-icon-left" href="#/app/project/{{project.nid}}">
+        <i class="icon ion-folder"></i>
+        {{project.title}}
+      </a>
+    </div>
+    <button ng-if="!isExpert" class="button button-full icon-left ion-plus-round button-green" ng-click="showPopup()">Create project</button>
+  </ion-content>
+</ion-view>

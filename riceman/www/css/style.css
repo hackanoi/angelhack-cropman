@@ -1,0 +1,131 @@
+/* Empty. Add your own CSS if you like */
+/* Style Dashboard */
+.dashboard .row {
+  height: 33.67%;
+}
+.dashboard a.item{
+  padding: 10px;
+  text-align: center;
+  height: 100%;
+}
+.dashboard a.item .icon {
+  color: #008637;
+  display: block;
+  font-size: 60px;
+}
+.dashboard a.item span{
+  display: inline-block;
+}
+/* General style */
+.ion-view .ion-content{
+  padding: 20px;
+}
+.button.button-upload{
+  background-color:#365769;
+  border-color: transparent;
+  color: #fff;
+}
+.button.button-green{
+  background-color:#38A063;
+  border-color: transparent;
+  color: #fff;
+}
+.narrow-back{
+  font-size: 35px;
+}
+.message {
+  color: red;
+  text-align: center;
+  padding: 5px;
+}
+.button-icon-above i{
+  display: block;
+}
+/* Project List Style */
+.ion-view .ion-content-projects{
+  background: #EEEEEE;
+}
+.ion-content-projects .project-item i{
+  color: #38A063;
+}
+.ion-content-projects .project-item{
+  margin-bottom: 20px;
+}
+/* Project Detail */
+.ion-view .ion-content-project-detail{
+  background: #EEEEEE;
+}
+.image-item{
+  background: #fff;
+  padding: 10px 10px 5px 10px;
+}
+.image-item .image-link{
+  display: block;
+}
+.image-item .image-info {
+  color: #595959;
+  font-size: 12px;
+}
+.image-item .image{
+  margin-right: 5px;
+  display: inline-block;
+}
+.image-info{
+  display: inline-block;
+  vertical-align: top;
+}
+.image-info h4.title{
+  margin-bottom: 20px;
+}
+.action-image .button{
+  min-width: 125px;
+}
+
+.image-data img{
+  width: 100%;
+}
+/* Image detail style */
+.ion-view .ion-content-image{
+  padding: 0;
+  padding-top: 20px;
+}
+.info-wrapper{
+  background: #EEEEEE;
+  padding: 20px 20px 40px 20px;
+}
+.image-wrapper img {
+  width: 100%;
+  height: auto;
+}
+.image-wrapper{
+  padding: 0 20px;
+}
+.comment p{
+  text-indent: 50px;
+}
+.image-item{
+  margin-bottom: 20px;
+}
+.image-item .item{
+  padding: 15px 15px 10px 15px;
+}
+.action-wrapper .col-50{
+  display: inline-block;
+}
+.action-wrapper{
+  text-align: center;
+}
+.form-action{
+  text-align: center;
+  margin-top: 10px;
+}
+form label{
+  margin-bottom: 20px;
+}
+/* Popup header */
+.popup-head{
+  background: #38A063;
+}
+.popup-head h3{
+  color: #fff;
+}

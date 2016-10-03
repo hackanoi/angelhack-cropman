@@ -1,0 +1,18 @@
+<ion-popover-view>
+  <ion-content>
+    <ion-list>
+      <ion-item menu-close href="#app/sign-in" ng-click="popover.hide()" ng-if="!username">
+        <i class="ion-log-in"></i> Log in
+      </ion-item>
+      <ion-item menu-close href="#app/sign-up" ng-click="popover.hide()" ng-if="!username">
+        <i class="ion-person-add"></i> Sign up
+      </ion-item>
+      <ion-item ng-if="username">
+        Hello {{username}}
+      </ion-item>
+      <ion-item menu-close ng-click="LogOut()" ng-if="username">
+        <i class="ion-log-out"></i> Log out
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-popover-view>

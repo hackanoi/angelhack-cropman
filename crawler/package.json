@@ -1,0 +1,24 @@
+{
+  "name": "phantom-crawler",
+  "version": "1.0.0",
+  "description": "crawl images using phantomjs and horseman",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "crawler",
+    "phantomjs",
+  ],
+  "author": "Minh Chu",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "node-horseman": "^3.0.1",
+    "phantomjs-prebuilt": "^2.1.7"
+  },
+  "engines": {
+    "node": ">=4.4.5",
+    "npm": ">=2.15.5"
+  }
+}

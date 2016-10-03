@@ -1,0 +1,30 @@
+<ion-view view-title="{{project.title}}" class="ion-view">
+  <ion-content class="ion-content ion-content-project-detail">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    <ul class="list list-images">
+      <li ng-repeat="image in images" class="image-item">
+        <a class="image-link" href="#/app/image/{{image.nid}}">
+          <div ng-bind-html="image.field_image" class="image">{{image.field_image}}</div>
+          <div class="image-info">
+            <h6 class="title">{{image.title}}</h6>
+            <p class="date">Date: {{image.date}}</p>
+          </div>
+        </a>
+      </li>
+    </ul>
+    <div class="action-wrapper action-image" ng-if="!isExpert">
+      <div class="col-50">
+        <button class=" button button-full button-green button-icon-above" ng-click="takePicture()"><i class="ion-camera icon"></i><span>Take a photo</span></button>
+      </div>
+      <div class="col-50">
+        <button class="button button-full button-upload button-icon-above" ng-click="choosePhoto()"><i class="ion-plus-round icon"></i><span>Upload</span></button>
+      </div>
+    </div>
+    <div class="row" ng-show="imgURI !== undefined">
+      <button class="ion-android-upload button icon button-full button-positive" ng-click="StoreInfor()"></button>
+    </div>
+  </ion-content>
+</ion-view>
